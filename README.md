@@ -8,6 +8,7 @@ S1G6
 
 ## *Group Members*
 - Adnan
+- Qusai
 
 ## *Data Source*
 The core data source for MindCare is based on user input and interactions with ChatGPT. This data is processed via OpenAI’s GPT API, which serves as the brain behind the chatbot feature. Some user-specific data, such as emotional history and app settings, is stored locally for convenience. The app requires an internet connection for chatbot interactions but allows offline usage for some non-chat functionalities.
