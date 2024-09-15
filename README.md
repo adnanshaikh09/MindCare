@@ -20,7 +20,10 @@ Data Source Type: Multi-user input (Hard)
 2. *Real-time Response*: The chatbot delivers responses in real-time, mimicking the conversational style of a mental health professional.
 3. *Sentiment Analysis*: The chatbot will analyze the sentiment of user input and adjust responses accordingly (e.g., offering calming advice for anxious inputs).
 4. *Daily Mood Logging*: Users can log their mood daily, which is tracked over time and visualized in a chart.
-
+5.⁠ ⁠*Personalized Mental Health Resources*: Users receive personalized mental health resources based on their chat history and emotional state.
+6.⁠ ⁠*Mental Health Check-ins*: Users can schedule regular check-ins where the chatbot asks about their emotional state.
+7.⁠ ⁠*Reminders for Self-care*: Users can set reminders for activities like meditation, exercise, or journaling, which help improve mental well-being.
+8.⁠ ⁠*Anonymized Data Sharing*: Users can choose to share anonymized data for research purposes, with full control over what gets shared.
 ---
 
 ## *Setup Instructions*
