@@ -5,3 +5,6 @@ MindCare is a mental health support app that offers a unique blend of technology
 
 ## *FOL Group ID*
 S1G6
+
+## *Group Members*
+- Adnan
