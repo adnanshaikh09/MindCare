@@ -19,3 +19,23 @@ Data Source Type: Multi-user input (Hard)
 2. *Real-time Response*: The chatbot delivers responses in real-time, mimicking the conversational style of a mental health professional.
 3. *Sentiment Analysis*: The chatbot will analyze the sentiment of user input and adjust responses accordingly (e.g., offering calming advice for anxious inputs).
 4. *Daily Mood Logging*: Users can log their mood daily, which is tracked over time and visualized in a chart.
+
+---
+
+## *Setup Instructions*
+1. Clone the repository to your local machine.
+2. Install dependencies:
+   bash
+   npm install
+   
+3. Run the development server:
+   bash
+   npm start
+   
+4. Access the app on your emulator or mobile device.
+
+## *Tech Stack*
+- *Frontend*: React Native
+- *Backend*: Django REST API
+- *AI Integration*: OpenAI GPT API (Chatbot)
+- *Database*: SQLite (for local data storage)
