@@ -25,6 +25,10 @@ Data Source Type: Multi-user input (Hard)
 6.⁠ ⁠*Mental Health Check-ins*: Users can schedule regular check-ins where the chatbot asks about their emotional state.
 7.⁠ ⁠*Reminders for Self-care*: Users can set reminders for activities like meditation, exercise, or journaling, which help improve mental well-being.
 8.⁠ ⁠*Anonymized Data Sharing*: Users can choose to share anonymized data for research purposes, with full control over what gets shared.
+9.⁠ ⁠*Dark Mode*: Users can switch between light and dark mode to customize the app’s appearance according to their preferences.
+10.⁠ ⁠*In-app Notifications*: Users receive notifications about upcoming check-ins or important mental health reminders directly within the app.
+11.⁠ ⁠*Tutorial and Onboarding*: New users are guided through an in-app tutorial, showing how to interact with the chatbot and log their emotions.
+12.⁠ ⁠*Security and Privacy Settings*: Users can adjust security settings, such as enabling or disabling biometric login for the app.
 ---
 
 ## *Setup Instructions*
