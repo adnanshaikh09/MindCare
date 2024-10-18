@@ -10,6 +10,7 @@ S1G6
 - Adnan
 - Qusai
 - Tanveer
+- Meet
 
 ## *Data Source*
 The core data source for MindCare is based on user input and interactions with ChatGPT. This data is processed via OpenAI’s GPT API, which serves as the brain behind the chatbot feature. Some user-specific data, such as emotional history and app settings, is stored locally for convenience. The app requires an internet connection for chatbot interactions but allows offline usage for some non-chat functionalities.
@@ -29,6 +30,10 @@ Data Source Type: Multi-user input (Hard)
 10.⁠ ⁠*In-app Notifications*: Users receive notifications about upcoming check-ins or important mental health reminders directly within the app.
 11.⁠ ⁠*Tutorial and Onboarding*: New users are guided through an in-app tutorial, showing how to interact with the chatbot and log their emotions.
 12.⁠ ⁠*Security and Privacy Settings*: Users can adjust security settings, such as enabling or disabling biometric login for the app.
+13. *Emotional State History Visualization*: Users can view their emotional state over time in a chart, providing insight into patterns in their mood.
+14. *Customizable User Profile*: Users can set up and customize their profile with preferences such as preferred chat topics, response style, and app themes.
+15. *Favorite Chat Excerpts*: Users can save key parts of their chat conversations with the AI that they find helpful, and revisit them later.
+16. *Offline Mode*: Some non-chat features, such as viewing saved mental health resources and logs, can be accessed in offline mode.
 ---
 
 ## *Setup Instructions*
