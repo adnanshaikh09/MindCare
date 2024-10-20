@@ -1,0 +1,1 @@
+export const BASE_URL = 'https://mcback-bdcpfpbbc8ccd0dt.canadacentral-01.azurewebsites.net/api/v1';
