@@ -42,6 +42,7 @@ export default function LoginScreen() {
         });
       } else {
         await SecureStore.setItemAsync('userToken', data.token);
+        await SecureStore.setItemAsync('userProfile', JSON.stringify(data.profile));
         // Show success toast and handle token if needed
         Toast.show({
           type: 'success',
