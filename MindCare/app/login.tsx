@@ -1,17 +1,70 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { Link, useNavigation } from 'expo-router';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image, TouchableWithoutFeedback, Keyboard, ActivityIndicator } from 'react-native';
+import { Link, useRouter } from 'expo-router';
+import Toast from 'react-native-toast-message';
+import { BASE_URL } from '../constants/api'; // Assuming the base URL is saved in the constants file
+import * as SecureStore from 'expo-secure-store';
 
 export default function LoginScreen() {
-  const navigation = useNavigation();
+  const router = useRouter(); // Use router for navigation
 
-  // Disable the automatic title on the page.
-  React.useLayoutEffect(() => {
-    navigation.setOptions({ headerShown: false });
-  }, [navigation]);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state for the button
+
+  // Check if both fields are filled to enable/disable the login button
+  const isFormValid = email && password;
+
+  const handleLogin = async () => {
+    setLoading(true); // Set loading state to true
+
+    try {
+      // API request for login
+      const response = await fetch(`${BASE_URL}/login/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Handle error response from server
+        Toast.show({
+          type: 'error',
+          text1: 'Login failed',
+          text2: data.non_field_errors ? data.non_field_errors[0] : 'Invalid credentials',
+        });
+      } else {
+        await SecureStore.setItemAsync('userToken', data.token);
+        // Show success toast and handle token if needed
+        Toast.show({
+          type: 'success',
+          text1: 'Login Successful',
+        });
+
+        router.replace('/home');
+        // You can store the token or handle redirection here
+        // For now, we'll just stay on the login screen
+      }
+    } catch (error) {
+      // Handle network or other errors
+      Toast.show({
+        type: 'error',
+        text1: 'Something went wrong',
+        text2: error.message,
+      });
+    } finally {
+      setLoading(false); // Reset loading state after the request is completed
+    }
+  };
 
   return (
-    // Dismiss keyboard when clicking outside of inputs
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
         <View style={styles.headerImageContainer}>
@@ -20,16 +73,42 @@ export default function LoginScreen() {
 
         <Text style={styles.title}>LOGIN</Text>
 
-        <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" placeholderTextColor="#999" />
-        <TextInput style={styles.input} placeholder="Password" secureTextEntry placeholderTextColor="#999" />
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          placeholderTextColor="#999"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          placeholderTextColor="#999"
+        />
 
-        <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.loginButtonText}>LOGIN</Text>
+        {/* Login Button */}
+        <TouchableOpacity
+          style={[styles.loginButton, !isFormValid && styles.disabledButton]} // Add disabled style when form is incomplete
+          onPress={handleLogin}
+          disabled={!isFormValid || loading} // Disable when loading or form is incomplete
+        >
+          {loading ? ( // Show loader when loading
+            <ActivityIndicator size="small" color="#FFF" />
+          ) : (
+            <Text style={styles.loginButtonText}>LOGIN</Text>
+          )}
         </TouchableOpacity>
 
         <Text style={styles.footerText}>
           Don't have an account? <Link href="/signup" style={styles.linkText}>Sign Up</Link>
         </Text>
+
+        {/* Toast notification component */}
+        <Toast />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -67,16 +146,19 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontSize: 16,
     color: '#333',
-    marginHorizontal: 20, // Adjust input field margins
+    marginHorizontal: 20,
   },
   loginButton: {
     backgroundColor: '#FFD700',
     borderRadius: 25,
     paddingVertical: 15,
     marginVertical: 20,
-    width: 200,            // Set a fixed width for the button
-    alignSelf: 'center',   // Center the button
+    width: 200,
+    alignSelf: 'center',
     alignItems: 'center',
+  },
+  disabledButton: {
+    backgroundColor: '#d3d3d3', // Disabled button color
   },
   loginButtonText: {
     fontSize: 18,
