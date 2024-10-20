@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, useNavigation } from 'expo-router';
 
-const SignupScreen = () => {
+export default function SignupScreen() {
+  const navigation = useNavigation();
+
+  // Disable the automatic title on the page.
+  React.useLayoutEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+
   const [gender, setGender] = useState('');
 
   return (
@@ -13,30 +20,9 @@ const SignupScreen = () => {
 
       <Text style={styles.title}>SIGNUP</Text>
 
-      <TextInput style={styles.input} placeholder="Full Name" placeholderTextColor="#999" />
+      <TextInput style={styles.input} placeholder="First Name" placeholderTextColor="#999" />
+      <TextInput style={styles.input} placeholder="Last Name" placeholderTextColor="#999" />
       <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" placeholderTextColor="#999" />
-      <TextInput style={styles.input} placeholder="Age" keyboardType="numeric" placeholderTextColor="#999" />
-
-      <View style={styles.genderContainer}>
-        <TouchableOpacity
-          style={[styles.genderOption, gender === 'Male' && styles.selectedGenderOption]}
-          onPress={() => setGender('Male')}
-        >
-          <Text style={styles.genderText}>Male</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.genderOption, gender === 'Female' && styles.selectedGenderOption]}
-          onPress={() => setGender('Female')}
-        >
-          <Text style={styles.genderText}>Female</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.genderOption, gender === 'Other' && styles.selectedGenderOption]}
-          onPress={() => setGender('Other')}
-        >
-          <Text style={styles.genderText}>Other</Text>
-        </TouchableOpacity>
-      </View>
 
       <TextInput style={styles.input} placeholder="Password" secureTextEntry placeholderTextColor="#999" />
       <TextInput style={styles.input} placeholder="Confirm Password" secureTextEntry placeholderTextColor="#999" />
@@ -50,7 +36,7 @@ const SignupScreen = () => {
       </Text>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -63,10 +49,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   headerImage: {
-    width: 150,
-    height: 150,
+    width: '100%',      // Make the image full-width
+    height: 200,        // Adjust the height accordingly
     resizeMode: 'cover',
-    borderRadius: 75,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
   },
   title: {
     fontSize: 32,
@@ -108,6 +95,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingVertical: 15,
     marginVertical: 20,
+    width: 200,            // Set a fixed width for the button
+    alignSelf: 'center',   // Center the button
     alignItems: 'center',
   },
   signupButtonText: {
@@ -125,5 +114,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-export default SignupScreen;
