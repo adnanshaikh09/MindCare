@@ -22,6 +22,7 @@ const HomeTabs: React.FC = () => {
         },
         tabBarActiveTintColor: '#4caf50', // Match active color
         tabBarInactiveTintColor: 'gray',  // Set inactive color
+        headerShown: false
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />

@@ -28,6 +28,7 @@ export default function Index() {
     };
     
     checkToken(); // Check the token on component mount
+
   }, []);
 
   if (isLoading) {
