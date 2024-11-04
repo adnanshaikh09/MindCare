@@ -1,22 +1,37 @@
 import AppointmentsSection from "@/components/AppointmentsSection";
 import ConcernsSection from "@/components/ConcernsSection";
 import ProfileHeader from "@/components/ProfileHeader";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View, Button } from "react-native";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 
 const ProfileScreen: React.FC = () => {
-  const { profile } = useLocalSearchParams(); // Access profile from redirect params
-  const parsedProfile = profile ? JSON.parse(profile as string) : null;
+  const [profileData, setProfileData] = useState(null);
   const router = useRouter();
+
+  // Fetch profile data from SecureStore
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const storedProfile = await SecureStore.getItemAsync("userProfile");
+        if (storedProfile) {
+          setProfileData(JSON.parse(storedProfile));
+        }
+      } catch (error) {
+        console.error("Failed to load profile data:", error);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
 
   // Logout function
   const handleLogout = async () => {
     try {
       // Delete user token from SecureStore
-      await SecureStore.deleteItemAsync("userToken"); // Assuming "userToken" is the key for stored token
-      router.replace("/signup"); // Replace "/signup" with the actual path to your signup screen
+      await SecureStore.deleteItemAsync("userToken");
+      router.replace("/signup");
     } catch (error) {
       console.error("Failed to log out:", error);
     }
@@ -24,15 +39,15 @@ const ProfileScreen: React.FC = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {parsedProfile && parsedProfile.user ? (
+      {profileData && profileData.user ? (
         <ProfileHeader
-          name={parsedProfile.user.first_name}
-          gender={parsedProfile.gender || "Not specified"}
-          age={parsedProfile.age || "N/A"} 
-          email={parsedProfile.user.email}
+          name={profileData.user.first_name}
+          gender={profileData.gender || "Not specified"}
+          age={profileData.age || "N/A"}
+          email={profileData.user.email}
         />
       ) : (
-        <Text style={styles.text}>Loading profile data...</Text> // Placeholder while loading
+        <Text style={styles.text}>Loading profile data...</Text>
       )}
       <ConcernsSection />
       <AppointmentsSection />

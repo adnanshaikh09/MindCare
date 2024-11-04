@@ -13,7 +13,7 @@ const HomeScreen: React.FC = () => {
           
           {/* Green Header */}
           <View style={styles.header}>
-            <Text style={styles.headerText}>Hello! Shreya</Text>
+            <Text style={styles.headerText}>Hello! Test</Text>
             <Image source={require('../../assets/images/profile.png')} style={styles.profileImage} />
           </View>
 
