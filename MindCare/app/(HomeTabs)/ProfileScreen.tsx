@@ -2,7 +2,7 @@ import AppointmentsSection from "@/components/AppointmentsSection";
 import ConcernsSection from "@/components/ConcernsSection";
 import ProfileHeader from "@/components/ProfileHeader";
 import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, Text } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 
 const ProfileScreen: React.FC = () => {
@@ -11,12 +11,16 @@ const ProfileScreen: React.FC = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <ProfileHeader
-        name={parsedProfile.user.first_name}
-        gender={parsedProfile.gender || "Not specified"}
-        age={parsedProfile.age || "N/A"} // Pass actual age if available
-        email={parsedProfile.user.email}
-      />
+      {parsedProfile && parsedProfile.user ? (
+        <ProfileHeader
+          name={parsedProfile.user.first_name}
+          gender={parsedProfile.gender || "Not specified"}
+          age={parsedProfile.age || "N/A"} // Pass actual age if available
+          email={parsedProfile.user.email}
+        />
+      ) : (
+        <Text style={styles.text}>Loading profile data...</Text> // Placeholder while loading
+      )}
       <ConcernsSection />
       <AppointmentsSection />
     </ScrollView>
