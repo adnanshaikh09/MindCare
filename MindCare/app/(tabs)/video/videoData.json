@@ -1,0 +1,24 @@
+[
+    {
+      "id": 1,
+      "title": "Exploring the Universe",
+      "coverImage": "https://example.com/image1.jpg",
+      "duration": "10:23",
+      "tag": "Science"
+    },
+    {
+      "id": 2,
+      "title": "How to Cook Pasta Like a Pro",
+      "coverImage": "https://example.com/image2.jpg",
+      "duration": "7:45",
+      "tag": "Cooking"
+    },
+    {
+      "id": 3,
+      "title": "React Native Basics",
+      "coverImage": "https://example.com/image3.jpg",
+      "duration": "15:30",
+      "tag": "Programming"
+    }
+  ]
+  
