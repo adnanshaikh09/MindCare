@@ -4,7 +4,7 @@ import { FlatList, View, StyleSheet, Text, TouchableOpacity, ActivityIndicator }
 import { SafeAreaView } from 'react-native-safe-area-context';
 import VideoCard from '@/components/VideoCard';
 import VideoPlayer from '@/components/VideoPlayer';
-import { fetchMentalHealthVideos } from '@/constants/api'; 
+import { fetchMentalHealthVideos } from '@/constants/api';
 
 interface Video {
   id: string;
@@ -57,7 +57,6 @@ const VideoFeed: React.FC = () => {
               <VideoCard
                 title={item.title}
                 coverImage={item.thumbnail}
-                duration={""} // Placeholder; YouTube API doesn’t return duration in search results
                 tag={item.channelTitle}
               />
             </TouchableOpacity>
@@ -72,7 +71,7 @@ const VideoFeed: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f9f9f9', // Light background for a clean look
   },
   loadingContainer: {
     flex: 1,
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   contentContainer: {
-    paddingBottom: 16,
+    paddingVertical: 10,
   },
   playerContainer: {
     flex: 1,

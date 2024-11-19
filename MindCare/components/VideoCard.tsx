@@ -22,26 +22,31 @@ const VideoCard: React.FC<VideoCardProps> = ({ title, coverImage, tag }) => {
 const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
-    marginVertical: 8,
-    paddingHorizontal: 16,
+    marginVertical: 10,
+    paddingHorizontal: 10,
     alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+    paddingBottom: 10,
   },
   coverImage: {
     width: 120,
-    height: 90,
+    height: 70,
     borderRadius: 8,
   },
   infoContainer: {
     flex: 1,
     marginLeft: 12,
+    justifyContent: 'center',
   },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#333',
   },
   tag: {
     fontSize: 14,
-    color: '#888',
+    color: '#666',
     marginTop: 4,
   },
 });
