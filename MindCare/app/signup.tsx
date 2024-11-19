@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image, TouchableWithoutFeedback, Keyboard, ActivityIndicator } from 'react-native';
 import { Link, useNavigation, useRouter } from 'expo-router';
 import Toast from 'react-native-toast-message';
-import { BASE_URL } from '../constants/api';
+import { BASE_URL } from '@/constants/api';
 
 
 export default function SignupScreen() {
@@ -67,7 +67,7 @@ export default function SignupScreen() {
           type: 'success',
           text1: 'Signup Successful',
         });
-        router.replace('/login'); // Use router.replace to navigate to login page
+        router.replace('/Login'); // Use router.replace to navigate to login page
       }
     } catch (error) {
       // Handle network or other errors
@@ -143,7 +143,7 @@ export default function SignupScreen() {
         </TouchableOpacity>
 
         <Text style={styles.footerText}>
-          Already have an account? <Link href="/login" style={styles.linkText}>Login</Link>
+          Already have an account? <Link href="/Login" style={styles.linkText}>Login</Link>
         </Text>
 
         {/* Toast notification component */}
