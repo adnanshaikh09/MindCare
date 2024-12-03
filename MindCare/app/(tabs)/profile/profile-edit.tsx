@@ -75,12 +75,12 @@ const EditProfileScreen: React.FC = () => {
         setAge(updatedAge);
 
         // Store the updated profile in SecureStore
-        await SecureStore.setItemAsync('userProfile', JSON.stringify({ ...data, age: updatedAge }));
+        await SecureStore.setItemAsync('profile', JSON.stringify({ ...data, age: updatedAge }));
 
         Alert.alert('Success', 'Profile updated successfully!');
       } else if (response.status === 403) {
         Alert.alert('Session Expired', 'Please log in again.');
-        await SecureStore.deleteItemAsync('token');
+        await SecureStore.deleteItemAsync('userToken');
         dispatch(logout());
         router.replace('/Login');
       } else {

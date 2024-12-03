@@ -2,25 +2,29 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image, TouchableWithoutFeedback, Keyboard, ActivityIndicator } from 'react-native';
 import { Link, useRouter } from 'expo-router';
 import Toast from 'react-native-toast-message';
-import { BASE_URL } from '@/constants/api';
+import { BASE_URL } from '@/constants/api'; // Assuming the base URL is saved in the constants file
 import * as SecureStore from 'expo-secure-store';
-import { useDispatch } from 'react-redux';
-import { setToken, setProfile } from '@/store/authSlice'; // Import Redux actions
+import { Provider, useDispatch } from 'react-redux';
 
-export default function LoginScreen() {
-  const router = useRouter();
-  const dispatch = useDispatch(); // Initialize dispatch for Redux
+import { setProfile, setToken } from '@/store/authSlice';
+import { store } from '@/store';
+
+const LoginScreenMain= () => {
+  const router = useRouter(); // Use router for navigation
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state for the button
 
+  // Check if both fields are filled to enable/disable the login button
   const isFormValid = email && password;
 
   const handleLogin = async () => {
-    setLoading(true);
+    setLoading(true); // Set loading state to true
 
     try {
+      // API request for login
       const response = await fetch(`${BASE_URL}/login/`, {
         method: 'POST',
         headers: {
@@ -35,36 +39,36 @@ export default function LoginScreen() {
       const data = await response.json();
 
       if (!response.ok) {
+        // Handle error response from server
         Toast.show({
           type: 'error',
           text1: 'Login failed',
           text2: data.non_field_errors ? data.non_field_errors[0] : 'Invalid credentials',
         });
       } else {
-        // Save token and profile in SecureStore
+        
         await SecureStore.setItemAsync('userToken', data.token);
         await SecureStore.setItemAsync('userProfile', JSON.stringify(data.profile));
-
-        // Dispatch Redux actions to set token and profile in Redux store
-        dispatch(setToken(data.token));
-        dispatch(setProfile(data.profile));
-
-        // Show success toast and navigate to home screen
+        // Show success toast and handle token if needed
         Toast.show({
           type: 'success',
           text1: 'Login Successful',
         });
-
+        dispatch(setToken(data.token));
+        dispatch(setProfile(JSON.stringify(data.profile)));
         router.replace('/home');
+        // You can store the token or handle redirection here
+        // For now, we'll just stay on the login screen
       }
     } catch (error) {
+      // Handle network or other errors
       Toast.show({
         type: 'error',
         text1: 'Something went wrong',
         text2: error.message,
       });
     } finally {
-      setLoading(false);
+      setLoading(false); // Reset loading state after the request is completed
     }
   };
 
@@ -94,12 +98,13 @@ export default function LoginScreen() {
           placeholderTextColor="#999"
         />
 
+        {/* Login Button */}
         <TouchableOpacity
-          style={[styles.loginButton, !isFormValid && styles.disabledButton]}
+          style={[styles.loginButton, !isFormValid && styles.disabledButton]} // Add disabled style when form is incomplete
           onPress={handleLogin}
-          disabled={!isFormValid || loading}
+          disabled={!isFormValid || loading} // Disable when loading or form is incomplete
         >
-          {loading ? (
+          {loading ? ( // Show loader when loading
             <ActivityIndicator size="small" color="#FFF" />
           ) : (
             <Text style={styles.loginButtonText}>LOGIN</Text>
@@ -107,9 +112,10 @@ export default function LoginScreen() {
         </TouchableOpacity>
 
         <Text style={styles.footerText}>
-          Don't have an account? <Link href="/signup" style={styles.linkText}>Sign Up</Link>
+          Don't have an account? <Link replace href="/signup" style={styles.linkText}>Sign Up</Link>
         </Text>
 
+        {/* Toast notification component */}
         <Toast />
       </SafeAreaView>
     </TouchableWithoutFeedback>
@@ -160,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   disabledButton: {
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#d3d3d3', // Disabled button color
   },
   loginButtonText: {
     fontSize: 18,
@@ -177,3 +183,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+
+export default function LoginScreen(){
+  return (
+      <Provider store={store}>
+          <LoginScreenMain/>
+      </Provider>
+  )
+};

@@ -1,68 +1,52 @@
+import Header from '@/components/HomeScreen/Header';
+import MoodTrackCard from '@/components/HomeScreen/MoodTrackCard';
+import QuoteCard from '@/components/HomeScreen/QuoteCard';
+import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 
 const HomeScreen: React.FC = () => {
+  const router = useRouter();
   return (
     <>
-      {/* Set the status bar to match the green background */}
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+      <View style={styles.headerBackground}></View>
+      <ScrollView style={styles.container}>
+        <Header />
+        <View style={styles.content}>
+          {/* Bot Image and Text/Button Section */}
+          <View style={styles.botSection}>
+            {/* Bot Image */}
+            <Image
+              source={require('@/assets/images/tink.gif')} // Replace with your bot image
+              style={styles.botImage}
+            />
 
-      <SafeAreaView style={styles.container} edges={['right', 'bottom', 'left']}>
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          
-          {/* Green Header */}
-          <View style={styles.header}>
-            <Text style={styles.headerText}>Hello! Test</Text>
-            <Image source={require('../../assets/images/profile.png')} style={styles.profileImage} />
-          </View>
-
-          {/* Chatbot Section */}
-          <View style={styles.chatbotSection}>
-            <Image source={require('../../assets/images/chatbot.png')} style={styles.chatbotImage} />
-            <Text style={styles.chatbotText}>I'm Tink</Text>
-            <TouchableOpacity style={styles.chatbotButton}>
-              <Text style={styles.chatbotButtonText}>LET'S TALK</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Quote of the Day Section */}
-          <View style={styles.quoteSection}>
-            <Text style={styles.quoteTitle}>QUOTE OF THE DAY</Text>
-            <TouchableOpacity style={styles.quoteButton}>
-              <Text style={styles.quoteText}>Be yourself no matter what they say!</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Tracks to Refresh Your Mood */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>TRACKS TO REFRESH YOUR MOOD!</Text>
-            <View style={styles.tracksContainer}>
-              <View style={styles.trackItem}>
-                <Image source={require('../../assets/images/yoga.webp')} style={styles.trackImage} />
-                <Text style={styles.trackText}>Yoga & Meditation</Text>
-              </View>
-              <View style={styles.trackItem}>
-                <Image source={require('../../assets/images/mind.jpg')} style={styles.trackImage} />
-                <Text style={styles.trackText}>Mind & Body</Text>
-              </View>
+            {/* Text and Button */}
+            <View style={styles.textContainer}>
+              <Text style={styles.botText}>I'M TINK</Text>
+              <TouchableOpacity onPress={() => router.push("/ChatScreen")} style={styles.button}>
+                <Text style={styles.buttonText}>LET'S TALK</Text>
+              </TouchableOpacity>
             </View>
           </View>
 
-          {/* Games Section */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>GAMES TO RELAX YOUR MIND!</Text>
-            <View style={styles.gamesContainer}>
-              <View style={styles.gameItem}>
-                <Text style={styles.gameText}>Let's Play!</Text>
-              </View>
-              <View style={styles.gameItem}>
-                <Text style={styles.gameText}>Let's Play!</Text>
-              </View>
-            </View>
+          {/* Quote Card */}
+          <QuoteCard quote="Be yourself no matter what they say!" />
+
+          {/* Mood Tracks Section */}
+          <Text style={styles.sectionTitle}>TRACKS TO REFRESH YOUR MOOD</Text>
+          <View style={styles.moodContainer}>
+            <MoodTrackCard
+              title="Yoga & Meditation"
+              image="https://example.com/yoga.jpg" // Replace with actual image URL
+            />
+            <MoodTrackCard
+              title="Mind & Body"
+              image="https://example.com/mind-body.jpg" // Replace with actual image URL
+            />
           </View>
-        </ScrollView>
-      </SafeAreaView>
+        </View>
+      </ScrollView>
     </>
   );
 };
@@ -70,120 +54,56 @@ const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F5F5F5',
   },
-  scrollViewContent: {
-    paddingBottom: 100,
+  headerBackground: {
+    backgroundColor: '#4CAF50',
+    height: 50,
+    overflow: 'hidden',
   },
-  header: {
-    backgroundColor: '#8bc34a',
-    height: 250, // Increased height to extend to the top
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
-    justifyContent: 'center',
+  content: {
+    padding: 16,
+  },
+  botSection: {
+    flexDirection: 'row', // Align bot image and text/button side by side
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 60,  // Padding to push content below the status bar
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    marginBottom: 20, // Add space below the bot section
   },
-  headerText: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  profileImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-  },
-  chatbotSection: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  chatbotImage: {
+  botImage: {
     width: 100,
     height: 100,
+    resizeMode: 'contain',
+    marginRight: 16, // Space between image and text
   },
-  chatbotText: {
-    fontSize: 22,
-    marginVertical: 10,
+  textContainer: {
+    flex: 1, // Make the text container take up remaining space
+  },
+  botText: {
+    fontSize: 24,
     fontWeight: 'bold',
+    color: '#4CAF50', // Green text
+    marginBottom: 12, // Space between text and button
   },
-  chatbotButton: {
-    backgroundColor: '#000',
-    borderRadius: 25,
+  button: {
+    backgroundColor: '#000', // Black button
     paddingVertical: 12,
-    paddingHorizontal: 35,
-  },
-  chatbotButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  quoteSection: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  quoteTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  quoteButton: {
-    backgroundColor: '#FFD700',
-    borderRadius: 20,
-    paddingVertical: 12,
-    paddingHorizontal: 35,
-    marginTop: 10,
-  },
-  quoteText: {
-    color: '#333',
-    fontWeight: 'bold',
-  },
-  section: {
-    marginTop: 30,
     paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: '#FFF', // White text
+    fontSize: 16,
+    textAlign: 'center',
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    marginVertical: 8,
   },
-  tracksContainer: {
+  moodContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 15,
-  },
-  trackItem: {
-    width: '48%',
-    alignItems: 'center',
-  },
-  trackImage: {
-    width: '100%',
-    height: 100,
-    borderRadius: 10,
-  },
-  trackText: {
-    marginTop: 5,
-    fontWeight: 'bold',
-  },
-  gamesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 15,
-  },
-  gameItem: {
-    width: '48%',
-    backgroundColor: '#fff',
-    paddingVertical: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  gameText: {
-    fontWeight: 'bold',
+    flexWrap: 'wrap',
   },
 });
 

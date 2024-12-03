@@ -35,6 +35,7 @@ function AppContent() {
         const profileDataString = await SecureStore.getItemAsync('userProfile');
 
         if (token && profileDataString) {
+          
           let profileData = JSON.parse(profileDataString);
           
           // If profileData contains dob, calculate age and add it to profileData
@@ -60,7 +61,7 @@ function AppContent() {
       if (token && profile) {
         router.replace('/profile');
       } else {
-        router.replace('/Login');
+        router.replace('/signup');
       }
     }
   }, [isLoading, token, profile, router]);
