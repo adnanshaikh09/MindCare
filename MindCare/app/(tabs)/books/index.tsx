@@ -28,7 +28,7 @@ const BookFeedScreen: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const [nextPage, setNextPage] = useState<string | null>(${BASE_URL}/books/);
+  const [nextPage, setNextPage] = useState<string | null>(`${BASE_URL}/books/`);
   const token = useSelector((state: RootState) => state.auth.token);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -43,7 +43,7 @@ const BookFeedScreen: React.FC = () => {
       const response = await fetch(pageUrl, {
         method: 'GET',
         headers: {
-          Authorization: Bearer ${token},
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -81,7 +81,7 @@ const BookFeedScreen: React.FC = () => {
 
   const onRefresh = () => {
     setRefreshing(true);
-    fetchBooks(true, ${BASE_URL}/books/);
+    fetchBooks(true, `${BASE_URL}/books/`);
   };
 
   const fetchNextBooks = () => {
@@ -91,7 +91,7 @@ const BookFeedScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchBooks(false, ${BASE_URL}/books/);
+    fetchBooks(false, `${BASE_URL}/books/`);
   }, []);
 
   if (loading && !refreshing && books.length === 0) {
